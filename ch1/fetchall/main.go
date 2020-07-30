@@ -16,6 +16,7 @@ import (
 	"time"
 )
 
+//go run ch1/fetchall/main.go https://baidu.com https://sina.com.cn https://qq.com
 func main() {
 	start := time.Now()
 	ch := make(chan string)
