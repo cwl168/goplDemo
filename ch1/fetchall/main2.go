@@ -65,7 +65,7 @@ func main() {
 	//		keys = append(keys, k)
 	//	}
 	//}
-	var i int = 1
+	/*var i int = 1
 	for {
 		if i > 18 {
 			break
@@ -75,9 +75,9 @@ func main() {
 			keys = append(keys, k)
 		}
 		i++
-	}
+	}*/
+	//如果写端没有写数据，也没有关闭。<-ch; 会阻塞
 	//for {
-	//	如果写端没有写数据，也没有关闭。<-ch; 会阻塞
 	//	if data, ok := <-ch; ok {
 	//		for k, v := range data {
 	//			result[k] = v
@@ -85,10 +85,12 @@ func main() {
 	//		}
 	//		fmt.Println(ok)
 	//	} else {
-	//		fmt.Println(ok)
-	//		return
+	//		break
 	//	}
 	//}
+	for v := range ch {
+		fmt.Println(v)
+	}
 	sort.Strings(keys) //按照url排序
 	for _, k := range keys {
 		fmt.Printf("%s : %s\n", k, result[k]) //输出按照URL排序后的结果
