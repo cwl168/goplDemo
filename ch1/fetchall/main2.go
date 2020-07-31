@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"runtime"
 	"sort"
 	"strings"
 	"time"
@@ -37,6 +38,10 @@ func fetchUrl(url string, ch chan<- map[string]string) { //使用map记录，url
 
 //go run ch1/fetchall/main2.go baidu.com sina.cn 163.com google.cn qq.com weibo.cn
 func main() {
+	defer func() {
+		time.Sleep(time.Second)
+		fmt.Printf("goroutine num %d\n", runtime.NumGoroutine())
+	}()
 	start := time.Now()
 	ch := make(chan map[string]string)
 	count := 0
@@ -53,12 +58,36 @@ func main() {
 	result := make(map[string]string)
 	keys := []string{}
 	fmt.Println(count)
-	//为什么要循环count
 	//for i := 0; i < count; i++ {
-	for k, v := range <-ch {
-		result[k] = v
-		keys = append(keys, k)
+	//  遍历map，取值，以下非遍历通道
+	//	for k, v := range <-ch {
+	//		result[k] = v
+	//		keys = append(keys, k)
+	//	}
+	//}
+	var i int = 1
+	for {
+		if i > 18 {
+			break
+		}
+		for k, v := range <-ch {
+			result[k] = v
+			keys = append(keys, k)
+		}
+		i++
 	}
+	//for {
+	//	如果写端没有写数据，也没有关闭。<-ch; 会阻塞
+	//	if data, ok := <-ch; ok {
+	//		for k, v := range data {
+	//			result[k] = v
+	//			keys = append(keys, k)
+	//		}
+	//		fmt.Println(ok)
+	//	} else {
+	//		fmt.Println(ok)
+	//		return
+	//	}
 	//}
 	sort.Strings(keys) //按照url排序
 	for _, k := range keys {

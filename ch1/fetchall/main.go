@@ -13,11 +13,17 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"runtime"
 	"time"
 )
 
 //go run ch1/fetchall/main.go https://baidu.com https://sina.com.cn https://qq.com
 func main() {
+	defer func() {
+		//time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 20)
+		fmt.Printf("goroutine num %d\n", runtime.NumGoroutine())
+	}()
 	start := time.Now()
 	ch := make(chan string)
 	for _, url := range os.Args[1:] {
