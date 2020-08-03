@@ -25,6 +25,9 @@ func main() {
 
 // handler echoes the Path component of the requested URL.
 func handler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.RequestURI() == "/favicon.ico" {
+		return
+	}
 	mu.Lock()
 	count++
 	mu.Unlock()
@@ -34,6 +37,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 // counter echoes the number of calls so far.
 func counter(w http.ResponseWriter, r *http.Request) {
+	if r.URL.RequestURI() == "/favicon.ico" {
+		return
+	}
 	mu.Lock()
 	fmt.Fprintf(w, "Count %d\n", count)
 	mu.Unlock()
