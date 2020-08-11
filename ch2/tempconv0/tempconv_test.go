@@ -5,9 +5,11 @@ package tempconv
 
 import "fmt"
 
+//go test -v ch2/tempconv0/tempconv_test.go
 func Example_one() {
 	{
 		//!+arith
+		// %g 无末尾的0
 		fmt.Printf("%g\n", BoilingC-FreezingC) // "100" °C
 		boilingF := CToF(BoilingC)
 		fmt.Printf("%g\n", boilingF-CToF(FreezingC)) // "180" °F
