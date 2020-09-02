@@ -3,21 +3,29 @@
 
 package tempconv
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"testing"
+)
 
-//go test -v ch2/tempconv0/tempconv_test.go
-func Example_one() {
+// 首先go mod init
+// go test -v  测试所有的方法
+// go test -run Example_one  -v 测试 Example_one方法
+// go test -run Example_two  -v 测试 Example_one方法
+
+func TestExample_one(t *testing.T) {
 	{
 		//!+arith
-		// %g 无末尾的0
-		fmt.Printf("%g\n", BoilingC-FreezingC) // "100" °C
-		boilingF := CToF(BoilingC)
+		fmt.Printf("%g\n", BoilingC-FreezingC)       // "100" °C  BoilingC和FreezingC都属于 Celsius 类型，因此可相减
+		boilingF := CToF(BoilingC)                   //Celsius转化为Fahrenheit
 		fmt.Printf("%g\n", boilingF-CToF(FreezingC)) // "180" °F
+
 		//!-arith
 	}
 	/*
 		//!+arith
-		fmt.Printf("%g\n", boilingF-FreezingC)       // compile error: type mismatch
+		fmt.Printf("%g\n", boilingF-FreezingC) // compile error: type mismatch
 		//!-arith
 	*/
 
@@ -29,12 +37,13 @@ func Example_one() {
 func Example_two() {
 	//!+printf
 	c := FToC(212.0)
-	fmt.Println(c.String()) // "100°C"
-	fmt.Printf("%v\n", c)   // "100°C"; no need to call String explicitly
-	fmt.Printf("%s\n", c)   // "100°C"
-	fmt.Println(c)          // "100°C"
-	fmt.Printf("%g\n", c)   // "100"; does not call String
-	fmt.Println(float64(c)) // "100"; does not call String
+	log.Println("code:", c.String()) //终端打印
+	fmt.Println(c.String())          // "100°C"
+	fmt.Printf("%v\n", c)            // "100°C"; no need to call String explicitly
+	fmt.Printf("%s\n", c)            // "100°C"
+	fmt.Println(c)                   // "100°C"
+	fmt.Printf("%g\n", c)            // "100"; does not call String
+	fmt.Println(float64(c))          // "100"; does not call String
 	//!-printf
 
 	// Output:

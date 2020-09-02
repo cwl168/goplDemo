@@ -18,10 +18,12 @@ const (
 	BoilingC      Celsius = 100
 )
 
+//摄氏温度转华氏温度  类型转换
 func CToF(c Celsius) Fahrenheit { return Fahrenheit(c*9/5 + 32) }
 
+//华氏温度转摄氏温度  类型转换 函数
 func FToC(f Fahrenheit) Celsius { return Celsius((f - 32) * 5 / 9) }
 
 //!-
-
+//方法
 func (c Celsius) String() string { return fmt.Sprintf("%g°C", c) }
