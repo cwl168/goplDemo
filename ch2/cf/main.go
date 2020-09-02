@@ -15,6 +15,7 @@ import (
 	"gopl.io/ch2/tempconv"
 )
 
+//go run  ch2/cf/main.go 32
 func main() {
 	for _, arg := range os.Args[1:] {
 		t, err := strconv.ParseFloat(arg, 64)
