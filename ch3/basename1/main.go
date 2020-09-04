@@ -13,8 +13,9 @@ import (
 )
 
 func main() {
-	input := bufio.NewScanner(os.Stdin)
+	input := bufio.NewScanner(os.Stdin) //从终端输入 /Users/caoweilin/Documents/ProcessList.json
 	for input.Scan() {
+		fmt.Println(input.Text())
 		fmt.Println(basename(input.Text()))
 	}
 	// NOTE: ignoring potential errors from input.Err()
@@ -26,15 +27,16 @@ func main() {
 func basename(s string) string {
 	// Discard last '/' and everything before.
 	for i := len(s) - 1; i >= 0; i-- {
+		fmt.Printf("%c\n", s[i])
 		if s[i] == '/' {
-			s = s[i+1:]
+			s = s[i+1:] //ProcessList.json
 			break
 		}
 	}
 	// Preserve everything before last '.'.
 	for i := len(s) - 1; i >= 0; i-- {
 		if s[i] == '.' {
-			s = s[:i]
+			s = s[:i] //ProcessList
 			break
 		}
 	}
