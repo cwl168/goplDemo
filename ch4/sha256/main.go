@@ -12,6 +12,7 @@ import "fmt"
 import "crypto/sha256"
 
 func main() {
+	//crypto/sha256包的Sum256函数对一个任意的字节slice类型的数据生成一个对应 的消息摘要。
 	c1 := sha256.Sum256([]byte("x"))
 	c2 := sha256.Sum256([]byte("X"))
 	fmt.Printf("%x\n%x\n%t\n%T\n", c1, c2, c1 == c2, c1)
