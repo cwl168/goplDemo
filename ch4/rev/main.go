@@ -17,7 +17,7 @@ import (
 func main() {
 	//!+array
 	a := [...]int{0, 1, 2, 3, 4, 5}
-	reverse(a[:])
+	reverse(a[:])  //反转数组
 	fmt.Println(a) // "[5 4 3 2 1 0]"
 	//!-array
 

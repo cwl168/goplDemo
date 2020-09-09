@@ -33,10 +33,10 @@ func appendInt(x []int, y int) []int {
 	var z []int
 	zlen := len(x) + 1
 	if zlen <= cap(x) {
-		// There is room to grow.  Extend the slice.
+		// There is room to grow.  Extend the slice. 没有足够的空间。分配一个新数组
 		z = x[:zlen]
 	} else {
-		// There is insufficient space.  Allocate a new array.
+		// There is insufficient space.  Allocate a new array. 如果有足 够空间的话，直接扩展slice
 		// Grow by doubling, for amortized linear complexity.
 		zcap := zlen
 		if zcap < 2*len(x) {
