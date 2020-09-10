@@ -6,7 +6,9 @@
 // Append illustrates the behavior of the built-in append function.
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func appendslice(x []int, y ...int) []int {
 	var z []int
@@ -32,12 +34,12 @@ func appendslice(x []int, y ...int) []int {
 func appendInt(x []int, y int) []int {
 	var z []int
 	zlen := len(x) + 1
-	if zlen <= cap(x) {
-		// There is room to grow.  Extend the slice. 没有足够的空间。分配一个新数组
+	if zlen <= cap(x) { //每次调用appendInt函数，必须先检测slice底层数组是否有足够的容量来保存新添加的元素
+		// There is room to grow.  Extend the slice. 还有增长空间。扩展部分
 		z = x[:zlen]
 	} else {
-		// There is insufficient space.  Allocate a new array. 如果有足 够空间的话，直接扩展slice
-		// Grow by doubling, for amortized linear complexity.
+		// There is insufficient space.  Allocate a new array.没有足够的空间。分配一个新数组。
+		// Grow by doubling, for amortized linear complexity. 通过加倍增长，平摊线性复杂度
 		zcap := zlen
 		if zcap < 2*len(x) {
 			zcap = 2 * len(x)
@@ -54,9 +56,15 @@ func appendInt(x []int, y int) []int {
 //!+growth
 func main() {
 	var x, y []int
+	//for i := 0; i < 10; i++ {
+	//	y = appendInt(x, i)
+	//	fmt.Printf("%d  cap=%d\t%v\t%v\n", i, cap(y), y, x)
+	//	x = y
+	//}
+	fmt.Println()
 	for i := 0; i < 10; i++ {
-		y = appendInt(x, i)
-		fmt.Printf("%d  cap=%d\t%v\n", i, cap(y), y)
+		y = appendslice(x, i)
+		fmt.Printf("%d  cap=%d\t%v\t%v\n", i, cap(y), y, x)
 		x = y
 	}
 }
