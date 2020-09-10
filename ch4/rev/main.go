@@ -30,13 +30,14 @@ func main() {
 	fmt.Println(s) // "[2 3 4 5 0 1]"
 	//!-slice
 
-	// Interactive test of reverse.
+	// Interactive test of reverse.  终端输入一行空格分割的数字 反转
 	input := bufio.NewScanner(os.Stdin)
 outer:
+	//可循环输入
 	for input.Scan() {
 		var ints []int
-		for _, s := range strings.Fields(input.Text()) {
-			x, err := strconv.ParseInt(s, 10, 64)
+		for _, s := range strings.Fields(input.Text()) { //去除s字符串的空格符，并且按照空格分割返回slice
+			x, err := strconv.ParseInt(s, 10, 64) //字符串转化为整数
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
 				continue outer
