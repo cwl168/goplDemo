@@ -41,7 +41,9 @@ func main() {
 	fmt.Printf("%q\n", data1)
 
 	s := []int{5, 6, 7, 8, 9}
-	fmt.Println(remove(s, 2))
+	fmt.Println(remove2(s, 2))
+	//fmt.Println(remove(s, 2))
+
 	//!-main
 }
 
@@ -55,12 +57,21 @@ func nonempty2(strings []string) []string {
 	}
 	return out
 }
+
+//要删除slice中间的某个元素并保存原有的元素顺序
 func remove(slice []int, i int) []int {
 	fmt.Println(slice[i:])
 	fmt.Println(slice[i+1:])
 	copy(slice[i:], slice[i+1:]) //slice[i:] 7 8 9   slice[i+1:]  8 9   结果 [5 6 8 9 9]
 	fmt.Println(slice)
 	return slice[:len(slice)-1] //[5 6 8 9]
+}
+
+//如果删除元素后不用保持原来顺序的，
+func remove2(slice []int, i int) []int {
+	slice[i] = slice[len(slice)-1] //最后一个元素覆盖被删除的元素：
+	fmt.Println(slice)
+	return slice[:len(slice)-1]
 }
 
 //!-alt
