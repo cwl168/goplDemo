@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-//!+
+//!+通过map来表示所有的输入行所对应的set集合，以确保已经在集合存在的行不会 被重复打印
 func main() {
 	seen := make(map[string]bool) // a set of strings
 	input := bufio.NewScanner(os.Stdin)
