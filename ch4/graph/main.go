@@ -8,7 +8,7 @@ package main
 
 import "fmt"
 
-//!+
+//!+//key类型 是一个字符串，value类型map[string]bool代表一个字符串集合。
 var graph = make(map[string]map[string]bool)
 
 func addEdge(from, to string) {
@@ -24,6 +24,13 @@ func hasEdge(from, to string) bool {
 	return graph[from][to]
 }
 
+/**
+map[
+a:map[b:true d:true]
+c:map[d:true]
+d:map[a:true]
+]
+*/
 //!-
 
 func main() {
@@ -31,6 +38,7 @@ func main() {
 	addEdge("c", "d")
 	addEdge("a", "d")
 	addEdge("d", "a")
+	fmt.Println(graph)
 	fmt.Println(hasEdge("a", "b"))
 	fmt.Println(hasEdge("c", "d"))
 	fmt.Println(hasEdge("a", "d"))
@@ -39,5 +47,4 @@ func main() {
 	fmt.Println(hasEdge("c", "d"))
 	fmt.Println(hasEdge("x", "d"))
 	fmt.Println(hasEdge("d", "x"))
-
 }
