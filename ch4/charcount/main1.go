@@ -1,21 +1,21 @@
 package main
 
 import (
-	"bufio"
+	//"bufio"
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"unicode"
 	"unicode/utf8"
 )
 
-//echo 中国中 .%é國�ひ | go run ch4/charcount/main.go
 func main() {
 	counts := make(map[rune]int)    // counts of Unicode characters
 	var utflen [utf8.UTFMax + 1]int // count of lengths of UTF-8 encodings
 	invalid := 0                    // count of invalid UTF-8 characters
 
-	in := bufio.NewReader(os.Stdin)
+	in := strings.NewReader("中国")
 	for {
 		r, n, err := in.ReadRune() // returns rune, nbytes, error
 		if err == io.EOF {
