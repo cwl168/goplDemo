@@ -9,8 +9,10 @@ import (
 	"unicode/utf8"
 )
 
-//echo 中国中 .%é國�ひ | go run ch4/charcount/main.go
+//echo 中国中 .%é國�ひ� | go run ch4/charcount/main.go  或者 go run ch4/charcount/main.go  然后 ctrl + d
 func main() {
+	fmt.Printf("%U\n", '�')
+	fmt.Println(unicode.ReplacementChar == '�')
 	counts := make(map[rune]int)    // counts of Unicode characters
 	var utflen [utf8.UTFMax + 1]int // count of lengths of UTF-8 encodings
 	invalid := 0                    // count of invalid UTF-8 characters
@@ -25,6 +27,10 @@ func main() {
 			fmt.Fprintf(os.Stderr, "charcount: %v\n", err)
 			os.Exit(1)
 		}
+		//fmt.Println(unicode.MaxRune)
+		//fmt.Println(unicode.ReplacementChar)
+		//fmt.Println(unicode.MaxASCII)
+		fmt.Println(r, n) //�字符unicode字符表示为U+FFFD 16进制  对应数值 65533 也就是r的值
 		if r == unicode.ReplacementChar && n == 1 {
 			invalid++
 			continue
