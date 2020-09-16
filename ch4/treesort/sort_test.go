@@ -4,7 +4,6 @@
 package treesort_test
 
 import (
-	"math/rand"
 	"sort"
 	"testing"
 
@@ -12,10 +11,11 @@ import (
 )
 
 func TestSort(t *testing.T) {
-	data := make([]int, 50)
-	for i := range data {
-		data[i] = rand.Int() % 50
-	}
+	//data := make([]int, 10)
+	//for i := range data {
+	//	data[i] = rand.Int() % 10
+	//}
+	data := []int{2, 10, 8, 5, 30, 4, 7, 9}
 	treesort.Sort(data)
 	if !sort.IntsAreSorted(data) {
 		t.Errorf("not sorted: %v", data)
