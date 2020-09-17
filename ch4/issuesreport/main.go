@@ -26,7 +26,7 @@ Age:    {{.CreatedAt | daysAgo}} days
 
 //!-template
 
-//!+daysAgo
+//!+daysAgo  Since 表示自从t时刻以后过了多长时间，是一个时间段（t时间距离现在的天数）
 func daysAgo(t time.Time) int {
 	return int(time.Since(t).Hours() / 24)
 }
