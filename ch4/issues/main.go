@@ -15,7 +15,8 @@ import (
 	"gopl.io/ch4/github"
 )
 
-//!+
+//!+ go run ch4/issues/main.go golang   https://api.github.com/search/issues?q=golang
+// go run ch4/issues/main.go is:open json decoder
 func main() {
 	result, err := github.SearchIssues(os.Args[1:])
 	if err != nil {
@@ -23,8 +24,8 @@ func main() {
 	}
 	fmt.Printf("%d issues:\n", result.TotalCount)
 	for _, item := range result.Items {
-		fmt.Printf("#%-5d %9.9s %.55s\n",
-			item.Number, item.User.Login, item.Title)
+		fmt.Printf("#%-5d %9.9s %.55s  %.55s\n",
+			item.Number, item.User.Login, item.Title, item.User.HTMLURL)
 	}
 }
 

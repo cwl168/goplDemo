@@ -42,6 +42,7 @@ func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	}
 
 	var result IssuesSearchResult
+	//基于流式的解码器json.Decoder(解析json)
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		resp.Body.Close()
 		return nil, err

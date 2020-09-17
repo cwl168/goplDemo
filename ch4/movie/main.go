@@ -40,11 +40,11 @@ func main() {
 			log.Fatalf("JSON marshaling failed: %s", err)
 		}
 		fmt.Printf("%s\n", data)
+		//[{"Title":"Casablanca","released":1942,"Actors":["Humphrey Bogart","Ingrid Bergman"]},{"Title":"Cool Hand Luke","released":1967,"color":true,"Actors":["Paul Newman"]},{"Title":"Bullitt","released":1968,"color":true,"Actors":["Steve McQueen","Jacqueline Bisset"]}]
 		//!-Marshal
 	}
-
 	{
-		//!+MarshalIndent
+		//!+MarshalIndent  格式化输出  json.MarshalIndent函数将产生整齐缩进的输出
 		data, err := json.MarshalIndent(movies, "", "    ")
 		if err != nil {
 			log.Fatalf("JSON marshaling failed: %s", err)
@@ -52,12 +52,16 @@ func main() {
 		fmt.Printf("%s\n", data)
 		//!-MarshalIndent
 
-		//!+Unmarshal
-		var titles []struct{ Title string }
+		//!+Unmarshal  json解码
+		var titles []struct {
+			Title    string
+			Released int
+		}
 		if err := json.Unmarshal(data, &titles); err != nil {
 			log.Fatalf("JSON unmarshaling failed: %s", err)
 		}
 		fmt.Println(titles) // "[{Casablanca} {Cool Hand Luke} {Bullitt}]"
+		//fmt.Printf("%#v\n", titles)
 		//!-Unmarshal
 	}
 }

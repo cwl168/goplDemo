@@ -20,6 +20,7 @@ type Wheel struct {
 	Spokes int
 }
 
+//匿名成员
 func main() {
 	var w Wheel
 	//!+
