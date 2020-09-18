@@ -66,16 +66,46 @@ var depth int
 
 func startElement(n *html.Node) {
 	if n.Type == html.ElementNode {
-		fmt.Printf("%*s<%s>\n", depth*2, "i", n.Data)
+		attr := ""
+		for _, a := range n.Attr {
+			attr += " " + a.Key + "=" + "\"" + a.Val + "\" "
+		}
+		fmt.Printf("%*s<%s%s", depth*2, "", n.Data, attr)
 		depth++
 	}
+	if n.Type == html.ElementNode && n.FirstChild == nil && n.Data != "script" {
+		fmt.Printf("/>\n")
+	} else if n.Type == html.ElementNode {
+		fmt.Printf(">\n")
+	}
+	//获取文本内容，赋值到标签内
+	if n.Type == html.TextNode {
+		fmt.Printf("%*s %s\n", depth*2, "", n.Data)
+	}
 }
-
 func endElement(n *html.Node) {
+	if n.Type == html.ElementNode && n.FirstChild == nil && n.Data != "script" {
+		depth--
+		fmt.Printf("\n")
+		return
+	}
 	if n.Type == html.ElementNode {
 		depth--
-		fmt.Printf("%*s</%s>\n", depth*2, "j", n.Data)
+		fmt.Printf("%*s</%s>\n", depth*2, "", n.Data)
 	}
 }
 
+/**
+<html>
+<head>
+	<script>
+		location.replace(location.href.replace("https://","http://"));
+	</script>
+</head>
+<body>
+	<noscript><meta http-equiv="refresh" content="0;url=http://www.baidu.com/"></noscript>
+</body>
+</html>
+
+*/
 //!-startend
