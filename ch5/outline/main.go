@@ -13,7 +13,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-//!+
+//!+  通过递归的方式遍历整个HTML结点树，并输出树的结构。
 func main() {
 	doc, err := html.Parse(os.Stdin)
 	if err != nil {
