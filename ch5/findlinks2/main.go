@@ -33,7 +33,7 @@ func visit(links []string, n *html.Node) []string {
 	return links
 }
 
-//!+
+//!+  是findlinks的改进版本。修改后的findlinks可以自己发起HTTP请求
 func main() {
 	for _, url := range os.Args[1:] {
 		links, err := findLinks(url)

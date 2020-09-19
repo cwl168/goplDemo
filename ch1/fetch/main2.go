@@ -7,18 +7,7 @@
 // Fetch prints the content found at each specified URL.
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"io"
-	"strings"
-
-	//"io/ioutil"
-	"net/http"
-	"os"
-)
-
-func main() {
+/*func main() {
 	for _, url := range os.Args[1:] {
 		if !strings.HasPrefix(url, "https://") {
 			url = "https://" + url
@@ -40,6 +29,6 @@ func main() {
 		}
 		wt.Flush()
 	}
-}
+}*/
 
 //!-

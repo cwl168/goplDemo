@@ -38,7 +38,9 @@ var issueList = template.Must(template.New("issuelist").Parse(`
 
 //!-template
 
-//!+
+//!+  go run ch4/issueshtml/main.go is:open json decoder > ch4/issueshtml/issues.html
+//!+  go run ch4/issueshtml/main.go repo:golang/go 3133 10535 >ch4/issueshtml/issues2.html
+//!+  go run ch4/issueshtml/main.go repo:golang/go 3133 10535 >ch4/issueshtml/issues3.html
 func main() {
 	result, err := github.SearchIssues(os.Args[1:])
 	if err != nil {

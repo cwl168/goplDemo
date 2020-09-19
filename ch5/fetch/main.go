@@ -28,7 +28,7 @@ func fetch(url string) (filename string, n int64, err error) {
 	if local == "/" {
 		local = "index.html"
 	}
-	f, err := os.Create(local)
+	f, err := os.Create(local) //创建一个文件
 	if err != nil {
 		return "", 0, err
 	}
@@ -40,15 +40,16 @@ func fetch(url string) (filename string, n int64, err error) {
 	return local, n, err
 }
 
-//!-
+//!-  go run ch5/fetch/main.go https://www.baidu.com
 
 func main() {
-	for _, url := range os.Args[1:] {
-		local, n, err := fetch(url)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "fetch %s: %v\n", url, err)
-			continue
-		}
-		fmt.Fprintf(os.Stderr, "%s => %s (%d bytes).\n", url, local, n)
+	//for _, url := range os.Args[1:] {
+	url := "https://www.sina.com.cn/"
+	local, n, err := fetch(url)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "fetch %s: %v\n", url, err)
+		//continue
 	}
+	fmt.Fprintf(os.Stderr, "%s => %s (%d bytes).\n", url, local, n)
+	//}
 }

@@ -14,6 +14,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+//go run ch5/outline2/outline.go https://www.baidu.com
 func main() {
 	for _, url := range os.Args[1:] {
 		outline(url)
@@ -65,7 +66,7 @@ var depth int
 
 func startElement(n *html.Node) {
 	if n.Type == html.ElementNode {
-		fmt.Printf("%*s<%s>\n", depth*2, "", n.Data)
+		fmt.Printf("%*s<%s>\n", depth*2, "i", n.Data)
 		depth++
 	}
 }
@@ -73,7 +74,7 @@ func startElement(n *html.Node) {
 func endElement(n *html.Node) {
 	if n.Type == html.ElementNode {
 		depth--
-		fmt.Printf("%*s</%s>\n", depth*2, "", n.Data)
+		fmt.Printf("%*s</%s>\n", depth*2, "j", n.Data)
 	}
 }
 
