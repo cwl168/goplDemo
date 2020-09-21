@@ -18,6 +18,7 @@ import (
 // breadthFirst calls f for each item in the worklist.
 // Any items returned by f are added to the worklist.
 // f is called at most once for each item.
+//广度优先算法。
 func breadthFirst(f func(item string) []string, worklist []string) {
 	seen := make(map[string]bool)
 	for len(worklist) > 0 {
@@ -47,6 +48,7 @@ func crawl(url string) []string {
 //!-crawl
 
 //!+main
+//go run ch5/findlinks3/findlinks.go http://www.baidu.com     https的百度域名无法抓取
 func main() {
 	// Crawl the web breadth-first,
 	// starting from the command-line arguments.

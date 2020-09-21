@@ -9,13 +9,14 @@ package links
 
 import (
 	"fmt"
-	"net/http"
-
 	"golang.org/x/net/html"
+	"net/http"
+	"regexp"
 )
 
 // Extract makes an HTTP GET request to the specified URL, parses
 // the response as HTML, and returns the links in the HTML document.
+// 新的匿名函数被引入，用于替换原来的visit函数
 func Extract(url string) ([]string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -33,6 +34,7 @@ func Extract(url string) ([]string, error) {
 	}
 
 	var links []string
+	//该匿名函数负责将新连接添 加到切片中
 	visitNode := func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "a" {
 			for _, a := range n.Attr {
@@ -43,6 +45,11 @@ func Extract(url string) ([]string, error) {
 				if err != nil {
 					continue // ignore bad URLs
 				}
+				ok, _ := regexp.MatchString(`.*javascript+`, link.String())
+				if ok {
+					continue
+				}
+
 				links = append(links, link.String())
 			}
 		}
@@ -61,6 +68,7 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		forEachNode(c, pre, post)
 	}
+	//post是多余的，用不到
 	if post != nil {
 		post(n)
 	}

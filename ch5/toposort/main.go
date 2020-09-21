@@ -8,7 +8,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"sort"
 )
 
@@ -59,13 +58,13 @@ func topoSort(m map[string][]string) []string {
 	}
 
 	var keys []string
+	//map 遍历是随机的
 	for key := range m {
 		keys = append(keys, key)
 	}
-
+	//字符串按递增顺序对字符串片进行排序
 	sort.Strings(keys)
 	fmt.Println(keys)
-	os.Exit(0)
 	visitAll(keys)
 	return order
 }
