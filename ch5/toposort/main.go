@@ -8,6 +8,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sort"
 )
 
@@ -35,6 +36,7 @@ var prereqs = map[string][]string{
 //!-table
 
 //!+main
+//深度优先遍历
 func main() {
 	for i, course := range topoSort(prereqs) {
 		fmt.Printf("%d:\t%s\n", i+1, course)
@@ -62,6 +64,8 @@ func topoSort(m map[string][]string) []string {
 	}
 
 	sort.Strings(keys)
+	fmt.Println(keys)
+	os.Exit(0)
 	visitAll(keys)
 	return order
 }
