@@ -7,8 +7,8 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -63,14 +63,9 @@ func save(u string) bool {
 		urlObj.Path = "/index.html"
 	}
 	filename := path + urlObj.Path //重点注意文件名
-	fmt.Println("filename:" + filename)
-	fmt.Println("path:" + path)
+	fmt.Println(path + "-------" + filename + "------------" + u)
 	//打开文件
-	f, ferr := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0755)
-	if ferr != nil {
-		fmt.Fprintf(os.Stderr, "os.OpenFile err: %v\n", ferr)
-		os.Exit(1)
-	}
+	f, _ := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0755)
 	//读取链接
 	resp, geterr := http.Get(u)
 
@@ -81,23 +76,24 @@ func save(u string) bool {
 	body, _ := ioutil.ReadAll(resp.Body)
 	//fmt.Println(body)
 	//创建保存目录
-	_, serr := os.Stat(path)
-	if serr != nil {
-		merr := os.MkdirAll(path, 0755)
-		if merr != nil {
-			fmt.Fprintf(os.Stderr, "os.MkdirAll err: %v\n", merr)
-			os.Exit(1)
-		}
+	_, err := os.Stat(path)
+	if err != nil {
+		os.MkdirAll(path, 0755)
 	}
-
-	io.WriteString(f, string(body))
+	buf := bufio.NewWriter(f)
+	buf.WriteString(string(body))
+	err = buf.Flush()
+	if err != nil {
+		log.Println("flush error :", err)
+	}
 	resp.Body.Close()
 	body = nil
+	os.Exit(0)
 	return true
 }
 
 //!+main
-//go run ch5/findlinks3/findlinks.go http://www.baidu.com     https的百度域名无法抓取
+//go run ch5/findlinks3/findlinks1.go http://www.baidu.com     https的百度域名无法抓取
 //修改crawl，使其能保存发现的页面，必要时，可以创建目录来保存这些页面。只保存来自 原始域名下的页面。假设初始页面在golang.org下，就不要保存vimeo.com下的页面。
 func main() {
 	// Crawl the web breadth-first,
