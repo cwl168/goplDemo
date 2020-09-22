@@ -40,6 +40,10 @@ func main() {
 	for i, course := range topoSort(prereqs) {
 		fmt.Printf("%d:\t%s\n", i+1, course)
 	}
+	fmt.Println("------------")
+	for k, v := range topoSort2(prereqs) {
+		fmt.Printf("%d:\t%s\n", k, v)
+	}
 }
 
 func topoSort(m map[string][]string) []string {
@@ -65,6 +69,28 @@ func topoSort(m map[string][]string) []string {
 	//字符串按递增顺序对字符串片进行排序
 	sort.Strings(keys)
 	fmt.Println(keys)
+	visitAll(keys)
+	return order
+}
+func topoSort2(m map[string][]string) map[int]string {
+	var order = make(map[int]string)
+	index := 1
+	seen := make(map[string]bool)
+	var visitAll func(items []string)
+	visitAll = func(items []string) {
+		for _, item := range items {
+			if !seen[item] {
+				seen[item] = true
+				visitAll(m[item])
+				order[index] = item
+				index++
+			}
+		}
+	}
+	var keys []string
+	for key := range m {
+		keys = append(keys, key)
+	}
 	visitAll(keys)
 	return order
 }
