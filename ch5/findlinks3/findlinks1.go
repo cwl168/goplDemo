@@ -7,8 +7,8 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -80,18 +80,13 @@ func save(u string) bool {
 	if err != nil {
 		os.MkdirAll(path, 0755)
 	}
-	buf := bufio.NewWriter(f)
-	buf.WriteString(string(body))
-	err = buf.Flush()
-	if err != nil {
-		log.Println("flush error :", err)
-	}
+	io.WriteString(f, string(body))
 	resp.Body.Close()
 	body = nil
-	os.Exit(0)
 	return true
 }
-func save2(u string) bool {
+
+/*func save2(u string) bool {
 	urlObj, _ := url.Parse(u)
 	path := "/Users/caoweilin/crawl/" + urlObj.Host
 	if urlObj.Path == "" || urlObj.Path == "/" {
@@ -129,7 +124,7 @@ func save2(u string) bool {
 	resp.Body.Close()
 	body = nil
 	return true
-}
+}*/
 
 //!+main
 //go run ch5/findlinks3/findlinks1.go http://www.baidu.com     https的百度域名无法抓取
