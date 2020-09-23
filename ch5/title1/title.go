@@ -49,6 +49,7 @@ func title(url string) error {
 	}
 
 	// Check Content-Type is HTML (e.g., "text/html; charset=utf-8").
+	//title函数会检查服务器返回的Content-Type字段，如果发 现页面不是HTML，将终止函数运行，返回错误。
 	ct := resp.Header.Get("Content-Type")
 	if ct != "text/html" && !strings.HasPrefix(ct, "text/html;") {
 		resp.Body.Close()
@@ -72,7 +73,7 @@ func title(url string) error {
 }
 
 //!-
-
+//go run ch5/title1/title.go https://www.baidu.com
 func main() {
 	for _, arg := range os.Args[1:] {
 		if err := title(arg); err != nil {

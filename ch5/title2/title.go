@@ -62,7 +62,7 @@ func title(url string) error {
 }
 
 //!-
-
+//defer 处理释放资源
 func main() {
 	for _, arg := range os.Args[1:] {
 		if err := title(arg); err != nil {

@@ -71,6 +71,7 @@ func save(u string) bool {
 
 	if geterr != nil || resp.StatusCode != http.StatusOK {
 		//resp.Body.Close()
+		fmt.Fprintf(os.Stderr, "http.Get err: %v\n", geterr)
 		return false
 	}
 	body, _ := ioutil.ReadAll(resp.Body)

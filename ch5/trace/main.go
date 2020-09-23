@@ -25,7 +25,7 @@ func trace(msg string) func() {
 }
 
 //!-main
-
+//defer机制也常被用于记录何时进入和退出函数。
 func main() {
 	bigSlowOperation()
 }
