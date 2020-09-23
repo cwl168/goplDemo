@@ -8,7 +8,7 @@ package main
 
 import "fmt"
 
-//!+f
+//!+f   当f(0)被调用时，发生panic异常，之前被延迟执行的的3个fmt.Printf被调用。
 func main() {
 	f(3)
 }
