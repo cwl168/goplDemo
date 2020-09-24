@@ -35,6 +35,7 @@ import (
 	"net/url"
 )
 
+//Nil也是一个合法的接收器类型
 func main() {
 	//!+main
 	m := url.Values{"lang": {"en"}} // direct construction

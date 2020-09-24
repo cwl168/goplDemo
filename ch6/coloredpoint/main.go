@@ -83,7 +83,7 @@ func init() {
 	q := ColoredPoint{&Point{5, 4}, blue}
 	fmt.Println(p.Distance(*q.Point)) // "5"
 	q.Point = p.Point                 // p and q now share the same Point
-	p.ScaleBy(2)
-	fmt.Println(*p.Point, *q.Point) // "{2 2} {2 2}"
+	p.ScaleBy(2)                      //编译器会隐式地帮我们用&p去调用ScaleBy这个方法。
+	fmt.Println(*p.Point, *q.Point)   // "{2 2} {2 2}"
 	//!-indirect
 }
