@@ -58,7 +58,7 @@ func init() {
 	p := Point{1, 2}
 	q := Point{4, 6}
 
-	distance := Point.Distance   // method expression
+	distance := Point.Distance   // method expression 方法表达式
 	fmt.Println(distance(p, q))  // "5"
 	fmt.Printf("%T\n", distance) // "func(Point, Point) float64"
 

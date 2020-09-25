@@ -3,7 +3,10 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func Example_one() {
 	//!+main
@@ -30,17 +33,24 @@ func Example_one() {
 	// true false
 }
 
-func Example_two() {
+func main() {
 	var x IntSet
 	x.Add(1)
 	x.Add(144)
 	x.Add(9)
 	x.Add(42)
 
+	x.Remove(42)
+
+	fmt.Println(x.Len())
+	//x.Clear()
 	//!+note
 	fmt.Println(&x)         // "{1 9 42 144}"
 	fmt.Println(x.String()) // "{1 9 42 144}"
-	fmt.Println(x)          // "{[4398046511618 0 65536]}"
+	//求和
+	fmt.Println(x.AddAll(1, 2, 3))
+	os.Exit(0)
+	fmt.Println(x) // "{[4398046511618 0 65536]}"
 	//!-note
 
 	// Output:

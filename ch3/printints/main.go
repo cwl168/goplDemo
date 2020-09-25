@@ -13,6 +13,7 @@ import (
 
 //!+
 // intsToString is like fmt.Sprint(values) but adds commas.
+//将切片转化为字符串
 func intsToString(values []int) string {
 	var buf bytes.Buffer
 	buf.WriteByte('[') //写入byte
@@ -28,8 +29,10 @@ func intsToString(values []int) string {
 }
 
 func main() {
-	fmt.Printf("%T\n", []int{1, 2, 3})        // "[1, 2, 3]"
-	fmt.Println(intsToString([]int{1, 2, 3})) // "[1, 2, 3]"
+	fmt.Printf("%T\n", []int{1, 2, 3}) // "[1, 2, 3]"
+	s := intsToString([]int{1, 2, 3})
+	fmt.Println(s) // "[1, 2, 3]"
+	fmt.Printf("%T\n", s)
 }
 
 //!-
