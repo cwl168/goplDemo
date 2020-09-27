@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 func Example_one() {
@@ -57,4 +58,8 @@ func main() {
 	// {1 9 42 144}
 	// {1 9 42 144}
 	// {[4398046511618 0 65536]}
+
+	const day = 24 * time.Hour
+	fmt.Println(day.Seconds())
+	time.Sleep(time.Second)
 }

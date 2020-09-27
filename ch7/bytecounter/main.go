@@ -15,7 +15,7 @@ import (
 type ByteCounter int
 
 func (c *ByteCounter) Write(p []byte) (int, error) {
-	*c += ByteCounter(len(p)) // convert int to ByteCounter
+	*c += ByteCounter(len(p)) // convert int to ByteCounter 在这个+=赋值语句中，让len(p)的类型和*c的类型匹配的转换是必须的。
 	return len(p), nil
 }
 
