@@ -6,6 +6,18 @@ import (
 	"os"
 )
 
+type ReadWriter interface {
+	Reader
+	Writer
+}
+type ReadWriter interface {
+	Read(p []byte) (n int, err error)
+	Write(p []byte) (n int, err error)
+}
+type ReadWriter interface {
+	Read(p []byte) (n int, err error)
+	Writer
+}
 type CountWriter struct {
 	Writer io.Writer
 	Count  int
