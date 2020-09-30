@@ -15,6 +15,7 @@ import (
 //!+sleep
 var period = flag.Duration("period", 1*time.Second, "sleep period")
 
+//go run ch7/sleep/sleep.go -period 5s
 func main() {
 	flag.Parse()
 	fmt.Printf("Sleeping for %v...", *period)

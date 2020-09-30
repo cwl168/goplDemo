@@ -34,6 +34,8 @@ func (p *Point) ScaleBy(factor float64) {
 	p.Y *= factor
 }
 
+//值类型既可以调用值接收者的方法，也可以调用指针接收者的方法；
+//指针类型既可以调用指针接收者的方法，也可以调用值接收者的方法。
 func main() {
 	//!+main
 	red := color.RGBA{255, 0, 0, 255}

@@ -17,7 +17,9 @@ type Fahrenheit float64
 func CToF(c Celsius) Fahrenheit { return Fahrenheit(c*9.0/5.0 + 32.0) }
 func FToC(f Fahrenheit) Celsius { return Celsius((f - 32.0) * 5.0 / 9.0) }
 
-func (c Celsius) String() string { return fmt.Sprintf("%g°C", c) }
+func (c Celsius) String() string {
+	return fmt.Sprintf("%g°C", c)
+}
 
 /*
 //!+flagvalue
@@ -39,6 +41,7 @@ func (f *celsiusFlag) Set(s string) error {
 	var unit string
 	var value float64
 	fmt.Sscanf(s, "%f%s", &value, &unit) // no error check needed
+	fmt.Println(value, unit)
 	switch unit {
 	case "C", "°C":
 		f.Celsius = Celsius(value)
