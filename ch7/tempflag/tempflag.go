@@ -16,6 +16,10 @@ import (
 //!+
 var temp = tempconv.CelsiusFlag("temp", 20.0, "the temperature")
 
+//go run ch7/tempflag/tempflag.go
+// go run ch7/tempflag/tempflag.go -temp -18C
+//go run ch7/tempflag/tempflag.go -help
+//go run ch7/tempflag/tempflag.go -temp 212°F
 func main() {
 	flag.Parse()
 	fmt.Println(*temp)

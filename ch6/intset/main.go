@@ -35,6 +35,7 @@ func Example_one() {
 }
 
 func main() {
+	//fmt.Println(IntSet{}.String())
 	var x IntSet
 	x.Add(1)
 	x.Add(144)
