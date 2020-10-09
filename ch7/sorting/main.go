@@ -16,11 +16,11 @@ import (
 
 //!+main
 type Track struct {
-	Title  string
-	Artist string
-	Album  string
-	Year   int
-	Length time.Duration
+	Title  string        //标题
+	Artist string        //艺术家
+	Album  string        //专辑
+	Year   int           // 年份
+	Length time.Duration //运行时间
 }
 
 var tracks = []*Track{
@@ -141,7 +141,7 @@ Ready 2 Go  Martin Solveig  Smash              2011  4m24s
 //!-customout
 */
 
-//!+customcode
+//!+customcode  多维度排序
 type customSort struct {
 	t    []*Track
 	less func(x, y *Track) bool
@@ -156,12 +156,12 @@ func (x customSort) Swap(i, j int)      { x.t[i], x.t[j] = x.t[j], x.t[i] }
 func init() {
 	//!+ints
 	values := []int{3, 1, 4, 1}
-	fmt.Println(sort.IntsAreSorted(values)) // "false"
-	sort.Ints(values)
-	fmt.Println(values)                     // "[1 1 3 4]"
-	fmt.Println(sort.IntsAreSorted(values)) // "true"
-	sort.Sort(sort.Reverse(sort.IntSlice(values)))
-	fmt.Println(values)                     // "[4 3 1 1]"
-	fmt.Println(sort.IntsAreSorted(values)) // "false"
+	fmt.Println(sort.IntsAreSorted(values))        // "false"
+	sort.Ints(values)                              //排序
+	fmt.Println(values)                            // "[1 1 3 4]"
+	fmt.Println(sort.IntsAreSorted(values))        // "true"  是否有序
+	sort.Sort(sort.Reverse(sort.IntSlice(values))) //  sort.IntSlice(values) 类型转换，转化为IntSlice类型，该类型实现了sort.Interface接口
+	fmt.Println(values)                            // "[4 3 1 1]"
+	fmt.Println(sort.IntsAreSorted(values))        // "false"
 	//!-ints
 }
