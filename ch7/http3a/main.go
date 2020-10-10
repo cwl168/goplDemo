@@ -13,6 +13,7 @@ import (
 	"net/http"
 )
 
+//ServeMux.HandleFunc改进版
 func main() {
 	db := database{"shoes": 50, "socks": 5}
 	mux := http.NewServeMux()

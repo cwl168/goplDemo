@@ -18,11 +18,11 @@ type dollars float32
 func (d dollars) String() string { return fmt.Sprintf("$%.2f", d) }
 
 //!+main
-
+//ServeMux.Handle改进版
 func main() {
 	db := database{"shoes": 50, "socks": 5}
 	mux := http.NewServeMux()
-	mux.Handle("/list", http.HandlerFunc(db.list))
+	mux.Handle("/list", http.HandlerFunc(db.list)) //语句http.HandlerFunc(handler.list)是一个转换而非一个函数调用
 	mux.Handle("/price", http.HandlerFunc(db.price))
 	log.Fatal(http.ListenAndServe("localhost:8000", mux))
 }

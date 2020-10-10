@@ -56,7 +56,7 @@ func precedence(op rune) int {
 //        | '-' expr                    a unary operator (+-)
 //        | expr '+' expr               a binary operator (+-*/)
 //
-func Parse(input string) (_ Expr, err error) {
+func Parse(input string) (_ Expr, err error) { //忽略该参数命名    _ Expr
 	defer func() {
 		switch x := recover().(type) {
 		case nil:

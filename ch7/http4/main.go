@@ -14,7 +14,7 @@ import (
 )
 
 //!+main
-
+//net/http包提供了一个全局的ServeMux实例DefaultServerMux和包级别的http.Handle和 http.HandleFunc函数
 func main() {
 	db := database{"shoes": 50, "socks": 5}
 	http.HandleFunc("/list", db.list)
