@@ -12,6 +12,7 @@ import (
 )
 
 //!+
+//计算菲波那契数列的第45个元素值
 func main() {
 	go spinner(100 * time.Millisecond)
 	const n = 45
