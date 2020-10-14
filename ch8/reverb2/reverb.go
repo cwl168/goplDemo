@@ -27,7 +27,7 @@ func echo(c net.Conn, shout string, delay time.Duration) {
 func handleConn(c net.Conn) {
 	input := bufio.NewScanner(c)
 	for input.Scan() {
-		go echo(c, input.Text(), 1*time.Second)
+		go echo(c, input.Text(), 1*time.Second) //为了模拟真实世界的回响，我们需要 更多的goroutine来做这件事情。这样我们就再一次地需要go这个关键词了
 	}
 	// NOTE: ignoring potential errors from input.Err()
 	c.Close()

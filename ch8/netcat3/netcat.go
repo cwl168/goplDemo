@@ -14,6 +14,7 @@ import (
 )
 
 //!+
+//不带缓存的Channels ,让主goroutine 等待后台goroutine完成工作后再退出，我们使用了一个channel来同步两个goroutine
 func main() {
 	conn, err := net.Dial("tcp", "localhost:8000")
 	if err != nil {
