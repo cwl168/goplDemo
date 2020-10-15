@@ -25,7 +25,7 @@ func main() {
 	defer conn.Close()
 	//，它在主goroutine中（译注：就是执行main函数的goroutine）将标准输入复制到 server，因此当客户端程序关闭标准输入时，后台goroutine可能依然在工作。
 	go mustCopy(os.Stdout, conn) //另一个goroutine会读取并打印服务 端的响应。
-	mustCopy(conn, os.Stdin)     //当main goroutine从标准输入流中读取内容并将其发送给服务器时
+	mustCopy(conn, os.Stdin)     //main goroutine从标准输入流中读取内容并将其发送给服务器
 }
 
 //!-
