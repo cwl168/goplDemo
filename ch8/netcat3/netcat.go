@@ -24,8 +24,8 @@ func main() {
 	done := make(chan struct{})
 	go func() {
 		io.Copy(os.Stdout, conn) // NOTE: ignoring errors
-		log.Println("done")
-		done <- struct{}{} // signal the main goroutine
+		log.Println("done")      //只要有连接存在，log.Println("done")是不会执行到吧,阻塞着，直到服务器端关闭这个连接（ctrl+c），或者客户端关闭这个连接（ ctrl +d）
+		done <- struct{}{}       // signal the main goroutine
 	}()
 	mustCopy(conn, os.Stdin)
 	conn.Close()
