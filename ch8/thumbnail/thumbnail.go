@@ -79,6 +79,7 @@ func ImageFile2(outfile, infile string) (err error) {
 // ImageFile reads an image from infile and writes
 // a thumbnail-size version of it in the same directory.
 // It returns the generated file name, e.g. "foo.thumb.jpeg".
+//循环迭代一些图片文件名，并为每一张图片生成一个缩略图
 func ImageFile(infile string) (string, error) {
 	ext := filepath.Ext(infile) // e.g., ".jpg", ".JPEG"
 	outfile := strings.TrimSuffix(infile, ext) + ".thumb" + ext

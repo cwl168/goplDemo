@@ -18,16 +18,28 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
-
 	"gopl.io/ch8/thumbnail"
 )
 
 func main() {
-	input := bufio.NewScanner(os.Stdin)
+	filenames:= []string{"/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/1.jpg","/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/2.jpg"}
+	ch := make(chan struct{})
+	for _, f := range filenames {
+		fmt.Println(f)
+		go func(f string) {
+			thumbnail.ImageFile(f) // NOTE: ignoring errors
+			ch <- struct{}{}
+		}(f)  //必须加参数，否则会出现循环变量快照问题
+	}
+
+	// Wait for goroutines to complete.
+	for range filenames {
+		fmt.Println(<-ch)
+	}
+
+
+	/*input := bufio.NewScanner(os.Stdin)
 	for input.Scan() {
 		thumb, err := thumbnail.ImageFile(input.Text())
 		if err != nil {
@@ -38,5 +50,5 @@ func main() {
 	}
 	if err := input.Err(); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 }
