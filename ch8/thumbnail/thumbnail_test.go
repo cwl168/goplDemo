@@ -134,12 +134,14 @@ func makeThumbnails6(filenames <-chan string) int64 {
 		}(f)
 	}
 
+	//在关闭掉sizes channel 之前work们退出
 	// closer
 	go func() {
 		wg.Wait()
 		close(sizes)
 	}()
 
+	//在main goroutine中使用了range loop来计 算总和
 	var total int64
 	for size := range sizes {
 		total += size

@@ -36,6 +36,7 @@ func main() {
 	go func() { worklist <- os.Args[1:] }()
 
 	// Create 20 crawler goroutines to fetch each unseen link.
+	//这样来保证最多20个HTTP请求在并发
 	for i := 0; i < 20; i++ {
 		go func() {
 			for link := range unseenLinks {
