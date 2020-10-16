@@ -58,6 +58,7 @@ func makeThumbnails3(filenames []string) {
 //!+4
 // makeThumbnails4 makes thumbnails for the specified files in parallel.
 // It returns an error if any step failed.
+//goroutine 泄露
 func makeThumbnails4(filenames []string) error {
 	errors := make(chan error)
 
@@ -83,6 +84,7 @@ func makeThumbnails4(filenames []string) error {
 // makeThumbnails5 makes thumbnails for the specified files in parallel.
 // It returns the generated file names in an arbitrary order,
 // or an error if any step failed.
+//goroutine 不泄露
 func makeThumbnails5(filenames []string) (thumbfiles []string, err error) {
 	type item struct {
 		thumbfile string
