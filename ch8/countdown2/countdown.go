@@ -13,7 +13,7 @@ import (
 )
 
 //!+
-
+//现在我们让这个程序支持在倒计时中，用户按下return键时直接中断发射流程
 func main() {
 	// ...create abort channel...
 

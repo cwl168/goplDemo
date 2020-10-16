@@ -13,10 +13,9 @@ package main
 
 import (
 	"fmt"
+	"gopl.io/ch5/links"
 	"log"
 	"os"
-
-	"gopl.io/ch5/links"
 )
 
 //!+crawl
@@ -32,11 +31,14 @@ func crawl(url string) []string {
 //!-crawl
 
 //!+main
+//不过这一次我们用channel代替slice来做这个队 列。每一个对crawl的调用都会在他们自己的goroutine中进行并且会把他们抓到的链接发送回 worklist。
+// 另外注意这里将命令行参数传入worklist也是在一个另外的goroutine中进行的，
 func main() {
 	worklist := make(chan []string)
 
 	// Start with the command-line arguments.
-	go func() { worklist <- os.Args[1:] }()
+	//go func() { worklist <- os.Args[1:] }()  //如果不在goroutine中接受参数，会阻塞
+	worklist <- os.Args[1:]
 
 	// Crawl the web concurrently.
 	seen := make(map[string]bool)

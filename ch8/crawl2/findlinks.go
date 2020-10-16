@@ -24,7 +24,7 @@ var tokens = make(chan struct{}, 20)
 
 func crawl(url string) []string {
 	fmt.Println(url)
-	tokens <- struct{}{} // acquire a token
+	tokens <- struct{}{} // acquire a token   来确保同一 时间对其只有20个调用，控制并发量
 	list, err := links.Extract(url)
 	<-tokens // release the token
 
@@ -37,6 +37,8 @@ func crawl(url string) []string {
 //!-sema
 
 //!+
+
+//计数信号量
 func main() {
 	worklist := make(chan []string)
 	var n int // number of pending sends to worklist
@@ -46,6 +48,7 @@ func main() {
 	go func() { worklist <- os.Args[1:] }()
 
 	// Crawl the web concurrently.
+	//n++ 是统计goroutine的数量的  该程序会终止
 	seen := make(map[string]bool)
 	for ; n > 0; n-- {
 		list := <-worklist

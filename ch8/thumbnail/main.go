@@ -19,11 +19,16 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"sync"
+
 	"gopl.io/ch8/thumbnail"
 )
 
 func main() {
-	filenames:= []string{"/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/1.jpg","/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/2.jpg"}
+	//测试makeThumbnails2
+	/*filenames:= []string{"/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/1.jpg","/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/2.jpg"}
 	ch := make(chan struct{})
 	for _, f := range filenames {
 		fmt.Println(f)
@@ -36,7 +41,75 @@ func main() {
 	// Wait for goroutines to complete.
 	for range filenames {
 		fmt.Println(<-ch)
+	}*/
+
+	//测试makeThumbnails6    sizes无缓冲channel
+	/*filenames:= []string{"/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/1.jpg","/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/2.jpg"}
+	sizes := make(chan int64)
+	var wg sync.WaitGroup // number of working goroutines
+	for _,f := range filenames {
+		wg.Add(1)
+		// worker
+		go func(f string) {
+			defer wg.Done()
+			thumb, err := thumbnail.ImageFile(f)
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			info, _ := os.Stat(thumb) // OK to ignore error
+			sizes <- info.Size()
+		}(f)
 	}
+
+	//在关闭掉sizes channel 之前work们退出
+	// closer
+	go func() {
+		wg.Wait()
+		close(sizes)
+	}()
+
+	//在main goroutine中使用了range loop来计 算总和
+	var total int64
+	for size := range sizes {
+		total += size
+	}
+	fmt.Println(total)*/
+
+
+	//测试makeThumbnails6    sizes有缓冲channel
+	filenames:= []string{"/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/1.jpg","/Users/caoweilin/go/src/gopl.io/ch8/thumbnail/img/2.jpg"}
+	sizes := make(chan int64,2)
+	var wg sync.WaitGroup // number of working goroutines
+	for _,f := range filenames {
+		wg.Add(1)
+		// worker
+		go func(f string) {
+			defer wg.Done()
+			thumb, err := thumbnail.ImageFile(f)
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			info, _ := os.Stat(thumb) // OK to ignore error
+			sizes <- info.Size()
+		}(f)
+	}
+	// closer
+	wg.Wait()
+	close(sizes)
+	//在main goroutine中使用了range loop来计 算总和
+	var total int64
+	for size := range sizes {
+		total += size
+	}
+	fmt.Println(total)
+
+
+
+
+
+
 
 
 	/*input := bufio.NewScanner(os.Stdin)
