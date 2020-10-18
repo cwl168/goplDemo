@@ -16,6 +16,7 @@ import (
 	"path/filepath"
 )
 
+//go run ch8/du1/main.go /Users/caoweilin/Downloads/Video  /Users/caoweilin/Downloads/Image  /Users/caoweilin/Downloads/Document
 func main() {
 	// Determine the initial directories.
 	flag.Parse()
@@ -25,6 +26,7 @@ func main() {
 	}
 
 	// Traverse the file tree.
+	//后台的goroutine调用walkDir来遍历命令行给出的每一个路径并最 终关闭fileSizes这个channel。
 	fileSizes := make(chan int64)
 	go func() {
 		for _, root := range roots {

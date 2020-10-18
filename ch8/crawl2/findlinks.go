@@ -38,7 +38,7 @@ func crawl(url string) []string {
 
 //!+
 
-//计数信号量
+//计数信号量   n++ 是统计goroutine的数量的 ，token控制并发量
 func main() {
 	worklist := make(chan []string)
 	var n int // number of pending sends to worklist

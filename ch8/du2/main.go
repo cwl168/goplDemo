@@ -21,6 +21,9 @@ import (
 //!+
 var verbose = flag.Bool("v", false, "show verbose progress messages")
 
+//go run ch8/du2/main.go -v  /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Book
+//go build ch8/du2/main.go
+//ch8/du2/main -v /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Books
 func main() {
 	// ...start background goroutine...
 
@@ -36,7 +39,7 @@ func main() {
 	fileSizes := make(chan int64)
 	go func() {
 		for _, root := range roots {
-			walkDir(root, fileSizes)
+			go walkDir(root, fileSizes)
 		}
 		close(fileSizes)
 	}()
@@ -45,8 +48,9 @@ func main() {
 	// Print the results periodically.
 	var tick <-chan time.Time
 	if *verbose {
-		tick = time.Tick(500 * time.Millisecond)
+		tick = time.Tick(1 * time.Millisecond)
 	}
+	//文件个数，文件总大小
 	var nfiles, nbytes int64
 loop:
 	for {
@@ -76,7 +80,7 @@ func walkDir(dir string, fileSizes chan<- int64) {
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
 			subdir := filepath.Join(dir, entry.Name())
-			walkDir(subdir, fileSizes)
+			go walkDir(subdir, fileSizes)
 		} else {
 			fileSizes <- entry.Size()
 		}

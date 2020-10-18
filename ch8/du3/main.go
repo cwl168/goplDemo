@@ -23,6 +23,7 @@ import (
 var vFlag = flag.Bool("v", false, "show verbose progress messages")
 
 //!+
+//go run ch8/du3/main.go -v  /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Books
 func main() {
 	// ...determine roots...
 
@@ -97,7 +98,7 @@ func walkDir(dir string, n *sync.WaitGroup, fileSizes chan<- int64) {
 }
 
 //!-walkDir
-
+//用计数信号量来阻止他同时打开太多的文件，就像我们在8.7节中的并发爬虫一样：
 //!+sema
 // sema is a counting semaphore for limiting concurrency in dirents.
 var sema = make(chan struct{}, 20)
