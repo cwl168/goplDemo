@@ -24,7 +24,8 @@ var (
 )
 
 func broadcaster() {
-	clients := make(map[client]bool) // all connected clients    clients这个map被限制在了一个独立的goroutine中
+	//避免数据竞争的方法是，避免从多个goroutine访问变量。
+	clients := make(map[client]bool) // all connected clients    clients这个map被限制在了一个独立的goroutine中    broadcaster goroutine是唯一一个能够访问clients map的goroutine,
 	for {
 		select {
 		case msg := <-messages:

@@ -27,5 +27,3 @@ func teller() {
 func init() {
 	go teller() // start the monitor goroutine
 }
-
-//!-

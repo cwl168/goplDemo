@@ -52,7 +52,7 @@ func main() {
 	for list := range worklist {
 		for _, link := range list {
 			if !seen[link] {
-				seen[link] = true
+				seen[link] = true //seen map  main goroutine是唯一一个能够访问seen map的goroutine， 避免数据竞争的方法是，避免从多个goroutine访问变量。
 				unseenLinks <- link
 			}
 		}
