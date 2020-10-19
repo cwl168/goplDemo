@@ -29,7 +29,7 @@ func cancelled() bool {
 	}
 }
 
-//!-1
+//go run ch8/du4/main.go   /Users/caoweilin/Downloads/Compressed  /Users/caoweilin/Downloads/Document /Users/caoweilin
 
 func main() {
 	// Determine the initial directories.
@@ -67,6 +67,7 @@ loop:
 		select {
 		case <-done:
 			// Drain fileSizes to allow existing goroutines to finish.
+			//在结束之前我们需要把fileSizes channel中的内容“排”空
 			for range fileSizes {
 				// Do nothing.
 			}

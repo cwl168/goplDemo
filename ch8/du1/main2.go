@@ -1,13 +1,4 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 249.
-
-// The du2 command computes the disk usage of the files in a directory.
 package main
-
-// The du2 variant uses select and a time.Ticker
-// to print the totals periodically if -v is set.
 
 import (
 	"flag"
@@ -21,9 +12,6 @@ import (
 //!+
 var verbose = flag.Bool("v", false, "show verbose progress messages")
 
-//go run ch8/du2/main.go -v  /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Book
-//go build ch8/du2/main.go
-//ch8/du2/main -v /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Books
 func main() {
 	// ...start background goroutine...
 
@@ -39,8 +27,9 @@ func main() {
 	fileSizes := make(chan int64)
 	go func() {
 		for _, root := range roots {
-			walkDir(root, fileSizes)
+			go walkDir(root, fileSizes)
 		}
+		//walkDir goroutine  没确定完成，你就关闭fileSizes channel
 		close(fileSizes)
 	}()
 
@@ -80,7 +69,7 @@ func walkDir(dir string, fileSizes chan<- int64) {
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
 			subdir := filepath.Join(dir, entry.Name())
-			walkDir(subdir, fileSizes)
+			go walkDir(subdir, fileSizes)
 		} else {
 			fileSizes <- entry.Size()
 		}

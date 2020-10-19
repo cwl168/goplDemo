@@ -42,8 +42,9 @@ func main() {
 	var n sync.WaitGroup
 	for _, root := range roots {
 		n.Add(1)
-		go walkDir(root, &n, fileSizes)
+		go walkDir(root, &n, fileSizes) //对每一个walkDir的调用创建一个新的goroutine。
 	}
+	//另一个goroutine会在计数器减为 零的时候将fileSizes这个channel关闭。
 	go func() {
 		n.Wait()
 		close(fileSizes)

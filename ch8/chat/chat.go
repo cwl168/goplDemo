@@ -24,7 +24,7 @@ var (
 )
 
 func broadcaster() {
-	clients := make(map[client]bool) // all connected clients
+	clients := make(map[client]bool) // all connected clients    clients这个map被限制在了一个独立的goroutine中
 	for {
 		select {
 		case msg := <-messages:
@@ -48,8 +48,8 @@ func broadcaster() {
 
 //!+handleConn
 func handleConn(conn net.Conn) {
-	ch := make(chan string) // outgoing client messages
-	go clientWriter(conn, ch)
+	ch := make(chan string)   // outgoing client messages
+	go clientWriter(conn, ch) //handleConn为每一个客户端创建了一个clientWriter的goroutine来接收向客户端发出消息 channel中发送的广播消息，
 
 	who := conn.RemoteAddr().String()
 	ch <- "You are " + who
@@ -76,6 +76,7 @@ func clientWriter(conn net.Conn, ch <-chan string) {
 //!-handleConn
 
 //!+main
+//四种goroutine  handleConn ， clientWriter，main，broadcaster
 func main() {
 	listener, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {

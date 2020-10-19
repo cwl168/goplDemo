@@ -1,13 +1,4 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 249.
-
-// The du2 command computes the disk usage of the files in a directory.
 package main
-
-// The du2 variant uses select and a time.Ticker
-// to print the totals periodically if -v is set.
 
 import (
 	"flag"
@@ -15,20 +6,15 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 )
 
-//!+
+//go run ch8/du1/main1.go -v   /Users/caoweilin/Downloads/Compressed  /Users/caoweilin/Downloads/Document
 var verbose = flag.Bool("v", false, "show verbose progress messages")
 
-//go run ch8/du2/main.go -v  /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Book
-//go build ch8/du2/main.go
-//ch8/du2/main -v /Users/caoweilin/Downloads/Soft /Users/caoweilin/Downloads/Algorithms /Users/caoweilin/Downloads/Books
 func main() {
-	// ...start background goroutine...
-
-	//!-
-	// Determine the initial directories.
+	var n sync.WaitGroup
 	flag.Parse()
 	roots := flag.Args()
 	if len(roots) == 0 {
@@ -39,11 +25,14 @@ func main() {
 	fileSizes := make(chan int64)
 	go func() {
 		for _, root := range roots {
-			walkDir(root, fileSizes)
+			n.Add(1)
+			go walkDir(root, fileSizes, &n)
 		}
+	}()
+	go func() {
+		n.Wait()
 		close(fileSizes)
 	}()
-
 	//!+
 	// Print the results periodically.
 	var tick <-chan time.Time
@@ -76,11 +65,13 @@ func printDiskUsage(nfiles, nbytes int64) {
 
 // walkDir recursively walks the file tree rooted at dir
 // and sends the size of each found file on fileSizes.
-func walkDir(dir string, fileSizes chan<- int64) {
+func walkDir(dir string, fileSizes chan<- int64, n *sync.WaitGroup) {
+	defer n.Done()
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
+			n.Add(1)
 			subdir := filepath.Join(dir, entry.Name())
-			walkDir(subdir, fileSizes)
+			go walkDir(subdir, fileSizes, n)
 		} else {
 			fileSizes <- entry.Size()
 		}
