@@ -4,6 +4,7 @@
 package bank_test
 
 import (
+	"fmt"
 	"sync"
 	"testing"
 
@@ -18,10 +19,11 @@ func TestBank(t *testing.T) {
 		go func(amount int) {
 			bank.Deposit(amount)
 			n.Done()
-		}(i)
+		}(i) //循环变量快照
 	}
 	n.Wait()
 
+	fmt.Println(bank.Balance())
 	if got, want := bank.Balance(), (1000+1)*1000/2; got != want {
 		t.Errorf("Balance = %d, want %d", got, want)
 	}
