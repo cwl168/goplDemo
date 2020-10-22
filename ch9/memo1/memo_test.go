@@ -12,12 +12,20 @@ import (
 
 var httpGetBody = memotest.HTTPGetBody
 
-func Test(t *testing.T) {
+//go test -run=TestSequential -race -v ch9/memo1/memo_test.go
+func TestSequential(t *testing.T) {
 	m := memo.New(httpGetBody)
 	memotest.Sequential(t, m)
 }
 
-// NOTE: not concurrency-safe!  Test fails.
+/*
+https://www.baidu.com, 321.225791ms, 227 bytes
+https://www.sina.com.cn, 186.793283ms, 524792 bytes
+https://www.qq.com, 159.126692ms, 103184 bytes
+https://www.sina.com.cn, 353ns, 524792 bytes
+*/
+
+// NOTE: not concurrency-safe!  Test fails.   go test -run=TestConcurrent -race -v ch9/memo1/memo_test.go
 func TestConcurrent(t *testing.T) {
 	m := memo.New(httpGetBody)
 	memotest.Concurrent(t, m)

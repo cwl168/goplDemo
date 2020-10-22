@@ -19,6 +19,7 @@ import (
 
 //!+httpRequestBody
 func httpGetBody(url string) (interface{}, error) {
+	fmt.Printf("requst：%s\n", url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -35,14 +36,10 @@ func incomingURLs() <-chan string {
 	ch := make(chan string)
 	go func() {
 		for _, url := range []string{
-			"https://golang.org",
-			"https://godoc.org",
-			"https://play.golang.org",
-			"http://gopl.io",
-			"https://golang.org",
-			"https://godoc.org",
-			"https://play.golang.org",
-			"http://gopl.io",
+			"https://www.baidu.com",
+			"https://www.sina.com.cn",
+			"https://www.qq.com",
+			"https://www.sina.com.cn",
 		} {
 			ch <- url
 		}
@@ -60,7 +57,7 @@ type M interface {
 	m := memo.New(httpGetBody)
 //!-seq
 */
-
+//顺序调用
 func Sequential(t *testing.T, m M) {
 	//!+seq
 	for url := range incomingURLs() {
@@ -81,7 +78,7 @@ func Sequential(t *testing.T, m M) {
 	m := memo.New(httpGetBody)
 //!-conc
 */
-
+//并发调用
 func Concurrent(t *testing.T, m M) {
 	//!+conc
 	var n sync.WaitGroup
