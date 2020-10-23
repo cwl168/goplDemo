@@ -27,7 +27,7 @@ func New(f Func) *Memo {
 	return &Memo{f: f, cache: make(map[string]result)}
 }
 
-// NOTE: not concurrency-safe!
+// NOTE: not concurrency-safe!   第一个版本 并发不安全
 func (memo *Memo) Get(key string) (interface{}, error) {
 	res, ok := memo.cache[key]
 	if !ok {

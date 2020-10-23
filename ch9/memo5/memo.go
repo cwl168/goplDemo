@@ -35,7 +35,9 @@ type request struct {
 	response chan<- result // the client wants a single result
 }
 
-type Memo struct{ requests chan request }
+type Memo struct {
+	requests chan request
+}
 
 // New returns a memoization of f.  Clients must subsequently call Close.
 func New(f Func) *Memo {

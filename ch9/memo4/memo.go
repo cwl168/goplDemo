@@ -35,6 +35,7 @@ type Memo struct {
 	cache map[string]*entry
 }
 
+//可以利用关闭channel的通知作用 goroutine A 在处理某个key时，其他goroutine在访问这个key时，使用 <-ch， 当 A处理完后，close(ch) 即可通知到其他goroutine处理完毕，读取操作在通道关闭之前都是阻塞的
 func (memo *Memo) Get(key string) (value interface{}, err error) {
 	memo.mu.Lock()
 	e := memo.cache[key]

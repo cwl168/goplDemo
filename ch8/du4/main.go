@@ -29,7 +29,7 @@ func cancelled() bool {
 	}
 }
 
-//go run ch8/du4/main.go   /Users/caoweilin/Downloads/Compressed  /Users/caoweilin/Downloads/Document /Users/caoweilin
+//go run ch8/du4/main.go   /Users/caoweilin/Downloads/Compressed  /Users/caoweilin/Downloads/Document /Users/caoweilin   输入回车 退出程序
 
 func main() {
 	// Determine the initial directories.
