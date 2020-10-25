@@ -16,6 +16,7 @@ import (
 	"strings"
 )
 
+//go run ch1/dup3/main.go ch1/dup2/test.txt
 func main() {
 	counts := make(map[string]int)
 	for _, filename := range os.Args[1:] {

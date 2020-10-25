@@ -14,6 +14,9 @@ import (
 	"os"
 )
 
+//1.   go run ch1/dup2/main.go ch1/dup2/test.txt
+//2.   go run ch1/dup2/main.go scanner对象从程序的标准输入中读取内容,Ctrl + d结束
+
 func main() {
 	counts := make(map[string]int)
 	files := os.Args[1:]
