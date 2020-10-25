@@ -31,7 +31,7 @@ type entry struct {
 
 // A request is a message requesting that the Func be applied to key.
 type request struct {
-	key      string
+	key      string        //请求地址
 	response chan<- result // the client wants a single result
 }
 
@@ -48,7 +48,7 @@ func New(f Func) *Memo {
 
 func (memo *Memo) Get(key string) (interface{}, error) {
 	response := make(chan result)
-	memo.requests <- request{key, response}
+	memo.requests <- request{key, response} //往requests通道写入
 	res := <-response
 	return res.value, res.err
 }
@@ -57,11 +57,11 @@ func (memo *Memo) Close() { close(memo.requests) }
 
 //!-get
 
-//!+monitor
+//!+monitor   monitor goroutine监控协程
 
 func (memo *Memo) server(f Func) {
 	cache := make(map[string]*entry)
-	for req := range memo.requests {
+	for req := range memo.requests { //从request通道读取
 		e := cache[req.key]
 		if e == nil {
 			// This is the first request for this key.
