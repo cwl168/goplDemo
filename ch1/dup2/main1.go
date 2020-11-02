@@ -17,8 +17,19 @@ import (
 //1.   go run ch1/dup2/main.go ch1/dup2/test.txt  ch1/dup2/test2.txt
 //2.   go run ch1/dup2/main.go scanner对象从程序的标准输入中读取内容,Ctrl + d结束
 
+//Exercise 1.4: Modify dup2 to print the names of all files in which each duplicated line occurs.
+/**
+map[
+12:[ch1/dup2/test.txt]
+23:[ch1/dup2/test.txt ch1/dup2/test.txt]
+34:[ch1/dup2/test.txt] aaa:[ch1/dup2/test2.txt]
+bb:[ch1/dup2/test2.txt ch1/dup2/test2.txt ch1/dup2/test2.txt]
+c:[ch1/dup2/test2.txt]
+ccc:[ch1/dup2/test2.txt]
+]
+*/
 func main() {
-	counts := make(map[string]int)
+	counts := make(map[string][]string)
 	files := os.Args[1:]
 	if len(files) == 0 {
 		countLines(os.Stdin, counts)
@@ -33,20 +44,19 @@ func main() {
 			f.Close()
 		}
 	}
-	//line行内容，n行次数
-	for line, n := range counts {
-		if n > 1 {
-			fmt.Printf("%d\t%s\n", n, line)
+	fmt.Println(counts)
+	for line, files := range counts {
+		if len(files) > 1 {
+			fmt.Printf("%d\t%s\t%s\n", len(files), line, files)
 		}
 	}
 }
 
-func countLines(f *os.File, counts map[string]int) {
+func countLines(f *os.File, counts map[string][]string) {
 	input := bufio.NewScanner(f)
 	for input.Scan() {
-		counts[input.Text()]++
+		counts[input.Text()] = append(counts[input.Text()], f.Name())
 	}
-	// NOTE: ignoring potential errors from input.Err()
 }
 
 //!-
