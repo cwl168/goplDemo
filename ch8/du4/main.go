@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -32,6 +33,10 @@ func cancelled() bool {
 //go run ch8/du4/main.go   /Users/caoweilin/Downloads/Compressed  /Users/caoweilin/Downloads/Document /Users/caoweilin   输入回车 退出程序
 
 func main() {
+	defer func() {
+		time.Sleep(5 * time.Second)
+		fmt.Println("the number of goroutines: ", runtime.NumGoroutine())
+	}()
 	// Determine the initial directories.
 	roots := os.Args[1:]
 	if len(roots) == 0 {
@@ -76,6 +81,7 @@ loop:
 			// ...
 			//!-3
 			if !ok {
+				fmt.Println("xxxxx")
 				break loop // fileSizes was closed
 			}
 			nfiles++
