@@ -8,18 +8,24 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"time"
 )
 
 //!+
 //计算菲波那契数列的第45个元素值
 func main() {
+	defer func() {
+		time.Sleep(time.Second * 2)
+		fmt.Println("\nthe number of goroutines: ", runtime.NumGoroutine())
+	}()
 	go spinner(100 * time.Millisecond)
 	const n = 45
 	fibN := fib(n) // slow
 	fmt.Printf("\rFibonacci(%d) = %d\n", n, fibN)
 }
 
+//当主函数返回时，所有的goroutine都会直接打断，程序退出。但是如果是常驻内存，会有goroutine泄露,该goroutine不会退出
 func spinner(delay time.Duration) {
 	for {
 		for _, r := range `-\|/` {
