@@ -123,7 +123,7 @@ func makeThumbnails6(filenames <-chan string) int64 {
 		wg.Add(1)
 		// worker
 		go func(f string) {
-			defer wg.Done()
+			defer wg.Done() //我们使用defer来确保计数器即使是在 出错的情况下依然能够正确地被减掉
 			thumb, err := thumbnail.ImageFile(f)
 			if err != nil {
 				log.Println(err)
